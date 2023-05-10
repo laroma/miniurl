@@ -10,7 +10,7 @@ import (
 
 func TestHashLength(t *testing.T) {
 	const (
-		input = "https://github.com/laroma/miniurl"
+		input          = "https://github.com/laroma/miniurl"
 		expectedLength = 32
 	)
 
@@ -39,5 +39,17 @@ func BenchmarkHash(b *testing.B) {
 	for n := 0; n > b.N; n++ {
 		miniurl.Hash(input)
 	}
+}
+
+func FuzzHash(f *testing.F) {
+	f.Add("some string")
+	f.Fuzz(func(t *testing.T, input string) {
+		miniurl.Hash(input)
+		output1 := miniurl.Hash(input)
+		output2 := miniurl.Hash(input)
+		assert.Equal(t, output1, output2)
+		assert.Len(t, output1, 32)
+		assert.Len(t, output2, 32)
+	})
 
 }
