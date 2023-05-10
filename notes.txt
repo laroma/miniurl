@@ -1,0 +1,6 @@
+ Example output:
+ go test -v
+
+ Benchmark test
+ go test -v -bench=. -run='^$'
+ go test -v -bench=. -run='^$' -benchmem
