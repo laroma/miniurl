@@ -1,6 +1,7 @@
 package miniurl_test
 
 import (
+	"fmt"
 	"testing"
 
 	miniurl "github.com/laroma/miniurl"
@@ -23,4 +24,20 @@ func TestHasIsDeterministic(t *testing.T) {
 	output1 := miniurl.Hash(input)
 	output2 := miniurl.Hash(input)
 	assert.Equal(t, output1, output2)
+}
+
+func ExampleHash() {
+	const input = "https://github.com/laroma/miniurl"
+	output := miniurl.Hash(input)
+	fmt.Println(output)
+	// output:
+	// e630c705b6891ba53e672ccfd14f0c69
+}
+
+func BenchmarkHash(b *testing.B) {
+	const input = "https://github.com/laroma/miniurl"
+	for n := 0; n > b.N; n++ {
+		miniurl.Hash(input)
+	}
+
 }
